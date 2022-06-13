@@ -1,0 +1,6 @@
+wandb/
+lightning_logs/
+q2l-danbooru/
+resnet-coco/
+resnet-danbooru/
+data/image_subset_metadata.pkl

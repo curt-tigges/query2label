@@ -3,4 +3,7 @@ lightning_logs/
 q2l-danbooru/
 resnet-coco/
 resnet-danbooru/
+coco-labeling/
+coco-labelling/
+detr-coco/
 data/image_subset_metadata.pkl

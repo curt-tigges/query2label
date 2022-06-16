@@ -13,12 +13,14 @@ class COCODataModule(pl.LightningDataModule):
     def __init__(
         self, 
         data_dir,
+        img_size,
         batch_size=128, 
         num_workers=0
         ) -> None:
 
         super().__init__()
         self.data_dir = data_dir
+        self.img_size = img_size
         self.batch_size = batch_size
         self.num_workers = num_workers
 
@@ -30,18 +32,18 @@ class COCODataModule(pl.LightningDataModule):
     def setup(self, stage=None) -> None:
 
         normalize = transforms.Normalize(
-            mean=[0.485, 0.456, 0.406],
-            std=[0.229, 0.224, 0.225])
+            mean=[0, 0, 0],
+            std=[1, 1, 1])
 
         train_transforms = transforms.Compose(
-            [transforms.Resize((448, 448)),
+            [transforms.Resize((self.img_size, self.img_size)),
             RandAugment(),
             transforms.ToTensor(),
             normalize]
         )
 
         test_transforms = transforms.Compose(
-            [transforms.Resize((448, 448)),
+            [transforms.Resize((self.img_size, self.img_size)),
             transforms.ToTensor(),
             normalize]
         )

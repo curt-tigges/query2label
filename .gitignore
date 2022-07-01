@@ -1,9 +1,10 @@
 wandb/
 lightning_logs/
+training/logs/
 q2l-danbooru/
 resnet-coco/
 resnet-danbooru/
 coco-labeling/
 coco-labelling/
 detr-coco/
-data/image_subset_metadata.pkl
+q2l_labeller/data/image_subset_metadata.pkl

@@ -7,9 +7,30 @@ from positional_encodings.torch_encodings import PositionalEncodingPermute2D, Su
 from q2l_labeller.models.timm_backbone import TimmBackbone
 
 class Query2Label(nn.Module):
+    """Modified Query2Label model
+
+    Unlike the model described in the paper (which uses a modified DETR 
+    transformer), this version uses a standard, unmodified Pytorch Transformer. 
+    Learnable label embeddings are passed to the decoder module as the target 
+    sequence (and ultimately is passed as the Query to MHA).
+    """
     def __init__(
         self, model, conv_out, num_classes, hidden_dim=256, nheads=8, 
         encoder_layers=6, decoder_layers=6, use_pos_encoding=False):
+        """Initializes model
+
+        Args:
+            model (str): Timm model descriptor for backbone.
+            conv_out (int): Backbone output channels.
+            num_classes (int): Number of possible label classes
+            hidden_dim (int, optional): Hidden channels from linear projection of
+            backbone output. Defaults to 256.
+            nheads (int, optional): Number of MHA heads. Defaults to 8.
+            encoder_layers (int, optional): Number of encoders. Defaults to 6.
+            decoder_layers (int, optional): Number of decoders. Defaults to 6.
+            use_pos_encoding (bool, optional): Flag for use of position encoding. 
+            Defaults to False.
+        """        
         
         super().__init__()
 
@@ -25,11 +46,18 @@ class Query2Label(nn.Module):
         # prediction head
         self.classifier = nn.Linear(num_classes * hidden_dim, num_classes)
 
-        # label parameters
-        # TODO: Rename 
+        # learnable label embedding
         self.query_pos = nn.Parameter(torch.rand(1, num_classes, hidden_dim))
 
     def forward(self, x):
+        """Passes batch through network
+
+        Args:
+            x (Tensor): Batch of images
+
+        Returns:
+            Tensor: Output of classification head
+        """        
         # produces output of shape [N x C x H x W]
         out = self.backbone(x)
         

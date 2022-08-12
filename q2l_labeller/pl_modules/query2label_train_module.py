@@ -45,12 +45,12 @@ class Query2LabelTrainModule(pl.LightningModule):
             nheads=num_heads,
             encoder_layers=num_encoders,
             decoder_layers=num_decoders,
-            use_pos_encoding=False,
+            use_pos_encoding=use_pos_encoding,
         )
         if loss == "BCE":
             self.base_criterion = nn.BCEWithLogitsLoss()
         elif loss == "ASL":
-            self.base_criterion = AsymmetricLoss(gamma_neg=4, gamma_pos=1)
+            self.base_criterion = AsymmetricLoss(gamma_neg=1, gamma_pos=0)
 
         self.criterion = CutMixCriterion(self.base_criterion)
 

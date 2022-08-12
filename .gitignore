@@ -1,4 +1,6 @@
 wandb/
+notebooks/
+tasks/
 lightning_logs/
 training/logs/
 q2l-danbooru/
@@ -7,4 +9,11 @@ resnet-danbooru/
 coco-labeling/
 coco-labelling/
 detr-coco/
+q2l_labeller/artifacts/
 q2l_labeller/data/image_subset_metadata.pkl
+q2l_labeller/data/coco-labels-2014-2017.txt
+q2l_labeller/data/danbooru.py
+q2l_labeller/data/danbooru_data_module.py
+q2l_labeller/data/danbooru_dataset.py
+3-danbooru-demo.ipynb
+setup.cfg
